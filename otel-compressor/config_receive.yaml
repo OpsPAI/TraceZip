@@ -1,0 +1,24 @@
+receivers:
+  prefix_compressed_receiver: 
+    protocols:
+      http:
+        endpoint: localhost:14318
+        traces_dictionary_url_path: /v1/tracesdict
+        
+processors:
+  batch:
+
+exporters:
+  # NOTE: Prior to v0.86.0 use `logging` instead of `debug`.
+  debug:
+    verbosity: basic
+
+service:
+  pipelines:
+    traces:
+      receivers: [prefix_compressed_receiver]
+      processors: [batch]
+      exporters: [debug]
+  telemetry:
+    logs:
+      level: debug

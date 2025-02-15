@@ -1,0 +1,38 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+      grpc:
+
+processors:
+  batch:
+    send_batch_size: 8192
+    timeout: 40ms
+
+exporters:
+  # NOTE: Prior to v0.86.0 use `logging` instead of `debug`.
+  debug:
+    verbosity: basic
+  prefix_compressed_exporter:
+    sample_buffer: 1024
+    srt_threshold: 10000
+    no_tracezip: false
+    attr_limit: 100
+    calc_zip_rate: false
+    enable_gzip: true
+    endpoint: http://127.0.0.1:14318
+    delete_resource: true
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prefix_compressed_exporter, debug]
+  telemetry:
+    logs:
+      level: debug
+    metrics:
+      address: 0.0.0.0:8887

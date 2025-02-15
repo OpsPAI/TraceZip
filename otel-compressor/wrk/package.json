@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/exporter-collector": "^0.25.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.51.0",
+    "@opentelemetry/sdk-trace-base": "^1.24.0",
+    "@opentelemetry/sdk-trace-node": "^1.24.0"
+  },
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js --config=config.json"
+  }
+}

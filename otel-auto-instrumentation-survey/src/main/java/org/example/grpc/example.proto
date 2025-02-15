@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package test;
+
+service TestService {
+  rpc Service1 (ServiceRequest) returns (ServiceResponse);
+  rpc Service2 (ServiceRequest) returns (ServiceResponse);
+  rpc Service3 (ServiceRequest) returns (ServiceResponse);
+  rpc Service4 (ServiceRequest) returns (ServiceResponse);
+  rpc Service5 (ServiceRequest) returns (ServiceResponse);
+}
+
+message ServiceRequest {
+  string param1 = 1;
+  string param2 = 2;
+  string param3 = 3;
+}
+
+message ServiceResponse {
+  string result = 1;
+}
