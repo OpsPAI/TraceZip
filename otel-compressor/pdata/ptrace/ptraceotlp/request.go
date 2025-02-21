@@ -463,7 +463,7 @@ func (ms ExportRequest) MarshalWithTraceZip(BufferSize int, AttrLimited int, Thr
 				value_, _ := attr.Value.Marshal()
 				attrs = append(attrs, Attributes__{
 					Key:   attr.Key,
-					Value: value_,
+					Value: string(value_),
 				})
 			}
 		}

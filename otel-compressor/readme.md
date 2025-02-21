@@ -2,7 +2,6 @@
 
 ## TL;DR
 
-- Read [OpenTelemetry Official Documentation](https://opentelemetry.io/docs/collector/configuration/).
 - Set Parameters in `./config` like:
 
   - `attr_limit`
@@ -11,6 +10,9 @@
 
   PROPERLY
 - You can use `docker-compose up -d` to setup agent-gateway architecture otel compressor.
+- Send spans to `localhost:4318`
+- You can check CR rate(compression rate) and throughput through `docker logs [id_of_compressor_agent]`.
+- You can change the config file in `./config` to change arguments or relay spans.
 
 ## Introduction
 
@@ -62,11 +64,9 @@ The receiver only needs to configure the listening host:port.
 
 ### How to use
 
-You could use our scripts in directory `wrk` to generate workloads, details could be seen in `./wrk/readme.md` .
+You can simply send formatted [span data](https://zenodo.org/records/14302089) to compressor endpoint. (You may need write a scripts to send it), using scripts in directory `./wrk`.
 
-Or you can simply send formatted [span data](https://zenodo.org/records/14302089) to compressor endpoint. (You may need write a scripts to send it), using scripts in directory `./wrk_datasets`.
-
-If you want to send the dataset provided by us to verify the experiment, please remember to select the span data with the same service instance name (infered by a attribute in `resource_spans.resource.attributes[]` called `service.name`) from the dataset for sending.
+If you want to send the dataset provided by us to verify the experiment, please remember to select the span data with the same service instance name (infered by a attribute in `resource_spans.resource.attributes[]` called `host.name`) from the dataset for sending. We distinguished it in new version datasets.
 
 We provide `config_export.yaml` and `config_receive` as examples.
 
