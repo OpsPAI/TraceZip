@@ -1,0 +1,31 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+      grpc:
+
+processors:
+  batch:
+    send_batch_size: 1024
+    timeout: 50ms
+
+exporters:
+  prefix_compressed_exporter:
+    sample_buffer: 1024
+    srt_threshold: 10000
+    attr_limit: 100
+    calc_zip_rate: true
+    enable_gzip: true
+    endpoint: http://compressor-gateway:4318
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prefix_compressed_exporter]
+  telemetry:
+    logs:
+      level: debug

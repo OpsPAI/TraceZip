@@ -1,79 +1,43 @@
-# Manual Tracing with OpenTelemetry
+# Send Files to OpenTelemetry Endpoint
 
-This repository provides a Node.js script to read a CSV file, create tracing spans using OpenTelemetry, and export the traces to an OpenTelemetry collector. The configuration for the OpenTelemetry collector, timeout, batch size, and file path is specified in a configuration file.
+This script reads `.txt` files from a specified folder, merges their contents up to a specified size, and sends the merged data to an OpenTelemetry endpoint. It also calculates and logs throughput statistics during the process.
 
-**Special Notice**: We do not recommend directly using the Alibaba microservice cluster tracing dataset for generating workload, since the microservice cluster tracing dataset contains globally collected spans data. In this case, using a static compressor will yield better compression benefits. Directly using the dataset for generating workload will only result in a 10% compression improvement with our OTEL compressor compared to using only gzip. If you attempt to use the Alibaba microservice cluster tracing dataset for generating workload and compressing it with our OTEL compressor, you should filter the spans in the dataset that are located at the same link nodes in the Call Graph Topology.
+## Requirements
 
-## Prerequisites
+- Node.js
+- Dependencies: `node-fetch`
 
-- Node.js installed on your system.
-- The following Node.js packages installed:
-  - `@opentelemetry/sdk-trace-node`
-  - `@opentelemetry/sdk-trace-base`
-  - `@opentelemetry/api`
-  - `@opentelemetry/exporter-trace-otlp-http`
-
-## Installation
-
-1. Install the required packages:
-
-   ```bash
-   npm install
-   ```
-
-## Configuration
-
-Create a configuration file (`config.json`) in the root directory of the repository. The configuration file should have the following structure:
-
-```json
-{
-  "otel": {
-    "url": "http://localhost:4318/v1/traces",
-    "timeout": 5000,
-    "batchSize": 20000
-  },
-  "path": "[file path]"
-}
+Install `node-fetch` using:
+```bash
+npm install node-fetch
 ```
-
-- `otel.url`: The URL of the OpenTelemetry collector.
-- `otel.timeout`: Timeout for exporting spans in milliseconds.
-- `otel.batchSize`: Maximum batch size for exporting spans.
-- `path`: Path to the CSV file to be processed.
 
 ## Usage
 
-To run the script, use the following command:
-
+Run the script with:
 ```bash
-node main.js --config=config.json
+node script.js <folderPath> <mergeFileSize> <endpointURL> <sendInterval>
 ```
 
-If you want to use a different configuration file, specify the path to the new configuration file:
+- `<folderPath>`: Path to the folder containing `.txt` files (default: `spans`).
+- `<mergeFileSize>`: Number of files to merge in each batch (default: `20`).
+- `<endpointURL>`: The OpenTelemetry endpoint to send data to (default: `http://127.0.0.1:4318/v1/traces`).
+- `<sendInterval>`: The time interval between each request is in milliseconds (default value: 1000).
 
-```bash
-node main.js --config=path/to/your/config.json
+Specifically, if you want to send the dataset we provided, you need to categorize all the span data by hostname and send them accordingly. You can find the hostname in the attributes of the resource_spans in each spans file.
+
+## Notes
+
+1. The script assumes that `.txt` files contain valid JSON.
+2. A delay of 1 second is added between each request.
+3. The OpenTelemetry endpoint URL can be specified as a parameter.
+
+## Example Output
+
+When running the script, you will see logs like:
+```
+Total size sent: 1.23 MB.
+Current throughput: 512.34 KB/second.
 ```
 
-## Script Explanation
-
-The script reads the configuration file, processes the CSV file specified in the `path` configuration, and sends tracing data to the specified OpenTelemetry collector. It creates spans for each line in the CSV file, setting attributes based on the CSV columns.
-
-### Example CSV Format
-
-The CSV file should have the following format (example):
-
-```csv
-timestamp,traceid,rpc,duration,attr1,attr2,attr3
-1234567890,abc123,exampleRpc,1000,value1,value2,value3
-```
-
-### Script Details
-
-- Reads the CSV file specified in the configuration.
-- Creates spans for each line, excluding specified attributes (`timestamp`, `traceid`, `rpc`).
-- Exports spans to the OpenTelemetry collector with the specified batch size and timeout.
-
-## License
-
-This project is licensed under the MIT License.
+These logs indicate the total data sent and the current throughput.

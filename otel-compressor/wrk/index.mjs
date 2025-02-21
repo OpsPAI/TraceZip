@@ -5,8 +5,9 @@ import fetch from 'node-fetch';
 // Get terminal input arguments
 const args = process.argv.slice(2);
 const folderPath = path.resolve(args[0] || "spans"); // First argument: folder path, default is "spans"
-const mergeFileSize = parseInt(args[1] || "20", 10); // Second argument: merge size, default is 20
+const mergeFileSize = parseInt(args[1] || "1", 10); // Second argument: merge size, default is 1
 const endpointURL = args[2] || "http://127.0.0.1:4318/v1/traces"; // Third argument: endpoint URL, default is OpenTelemetry endpoint
+const sendInterval = parseInt(args[3] || "1000", 10); // Fourth argument: send interval, default is 1000 ms
 
 // Get all .txt files in the folder
 const files = fs.readdirSync(folderPath).filter(file => file.endsWith('.txt'));
@@ -35,7 +36,7 @@ async function sendFiles() {
         const data = fs.readFileSync(filePath, 'utf-8');
         const jsonData = JSON.parse(data); // Assume the file content is valid JSON
 
-        if (count++ === 0) {
+        if (count++ === 0 && mergeFileSize !== 1) {
           toSend = jsonData;
           continue;
         }
@@ -80,7 +81,7 @@ async function sendFiles() {
       }
 
       // Wait 1000 milliseconds before sending the next request
-      await delay(1000); // 1000 ms delay
+      await delay(sendInterval); // 1000 ms delay
     }
   };
 

@@ -1,0 +1,31 @@
+version: '3'
+services:
+  compressor-agent:
+    image: angrychow1/otel-compressor
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my-network
+    volumes:
+      - ./config/compressor-agent.yml:/app/agent-config.yml
+    command: ["--config", "agent-config.yml"]
+    depends_on:
+      - compressor-gateway
+    ports:
+      - "4318:4318"
+
+  compressor-gateway:
+    image: angrychow1/otel-compressor
+    deploy:
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my-network
+    volumes:
+      - ./config/compressor-gateway.yml:/app/gateway-config.yml
+    command: ["--config", "gateway-config.yml"]
+
+networks:
+  my-network:
+    driver: bridge

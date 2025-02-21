@@ -3,13 +3,14 @@
 ## TL;DR
 
 - Read [OpenTelemetry Official Documentation](https://opentelemetry.io/docs/collector/configuration/).
-- Set Parameters in `config_export.yaml` like:
+- Set Parameters in `./config` like:
 
   - `attr_limit`
   - `srt_threshold`
   - batch size, parameter of component batch[which is a processor]
 
   PROPERLY
+- You can use `docker-compose up -d` to setup agent-gateway architecture otel compressor.
 
 ## Introduction
 
@@ -21,7 +22,7 @@ Use command `go work sync` to synchronize all modules.
 
 Compile the OTEL collector with our compression and decompression plugins using `go build ./otelcol-dev`, or use our provided Dockerfile to package the images.
 
-**Also you can use the docker image that we built:`angrychow1/compressor:1.0`.**
+**Also you can use the docker image that we built:`angrychow1/otel-compressor:latest`.**
 
 For usage and configuration of the OpenTelemetry collector and plugins, refer to the [OpenTelemetry official documentation](https://opentelemetry.io/docs/collector/configuration/).
 
