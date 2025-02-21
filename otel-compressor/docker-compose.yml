@@ -1,7 +1,7 @@
 version: '3'
 services:
   compressor-agent:
-    image: angrychow1/otel-compressor
+    image: angrychow1/otel-compressor:latest
     deploy:
       restart_policy:
         condition: on-failure
@@ -16,7 +16,7 @@ services:
       - "4318:4318"
 
   compressor-gateway:
-    image: angrychow1/otel-compressor
+    image: angrychow1/otel-compressor:latest
     deploy:
       restart_policy:
         condition: on-failure

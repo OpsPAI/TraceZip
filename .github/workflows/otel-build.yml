@@ -33,5 +33,11 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+          # Build the image with the date tag
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/otel-compressor:${{ env.TAG }} ./otel-compressor
+          # Push the image with the date tag
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/otel-compressor:${{ env.TAG }}
+          # Tag the image with the 'latest' tag
+          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/otel-compressor:${{ env.TAG }} ${{ secrets.DOCKER_HUB_USERNAME }}/otel-compressor:latest
+          # Push the image with the 'latest' tag
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/otel-compressor:latest
