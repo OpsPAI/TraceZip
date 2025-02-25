@@ -7,15 +7,16 @@ receivers:
 processors:
   batch:
     send_batch_size: 1024
-    timeout: 50ms
+    timeout: 10s
 
 exporters:
   prefix_compressed_exporter:
-    sample_buffer: 1024
-    srt_threshold: 10000
+    sample_buffer: 102400
+    srt_threshold: 4000
     attr_limit: 100
     calc_zip_rate: true
     enable_gzip: true
+    delete_resource: true
     endpoint: http://compressor-gateway:4318
     tls:
       insecure: true

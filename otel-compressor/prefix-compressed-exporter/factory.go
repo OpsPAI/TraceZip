@@ -49,7 +49,7 @@ func createDefaultConfig() component.Config {
 		AttrLimit:      100,
 		CalcZipRate:    false,
 		EnableGzip:     false,
-		DeleteResource: false,
+		DeleteResource: true,
 		NoTraceZip:     false,
 	}
 }

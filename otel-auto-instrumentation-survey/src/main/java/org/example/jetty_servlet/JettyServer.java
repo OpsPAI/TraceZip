@@ -16,10 +16,10 @@ public class JettyServer {
         context.setContextPath("/");
 
         // 添加 Servlet 到上下文
-        context.addServlet(new ServletHolder(new HelloServlet()), "/hello1");
-        context.addServlet(new ServletHolder(new HelloServlet()), "/hello2");
-        context.addServlet(new ServletHolder(new HelloServlet()), "/hello3");
-        context.addServlet(new ServletHolder(new HelloServlet()), "/hello4");
+        context.addServlet(new ServletHolder(new HelloServlet()), "/1a3fef35-bfb8-440c-b8b8-eb57a3f01d2a");
+        context.addServlet(new ServletHolder(new HelloServlet()), "/ca254a0d-786d-4331-becf-37a35d713253");
+        context.addServlet(new ServletHolder(new HelloServlet()), "/7ed3f15b-23e6-48c6-8eb4-65f4790dacc6");
+        context.addServlet(new ServletHolder(new HelloServlet()), "/2bddf016-7afa-4473-aa15-1d7f917e5ad4");
 
         // 设置服务器的处理器
         server.setHandler(context);

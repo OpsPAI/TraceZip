@@ -9,20 +9,20 @@ import org.apache.hc.core5.http.HttpEntityContainer;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
-import java.util.Random;
+import java.util.*;
 
 public class ApacheHttpExecute {
     private static final String[] urls = {
-            "http://localhost:8000/1",
-            "http://localhost:8000/2",
-            "http://localhost:8000/3",
-            "http://localhost:8000/4",
-            "http://localhost:8000/5",
-            "http://localhost:8000/6",
-            "http://localhost:8000/7",
-            "http://localhost:8000/8",
-            "http://localhost:8000/9",
-            "http://localhost:8000/a"
+            "http://mock1.local:8008/1",
+            "http://mock1.local:8008/2",
+            "http://mock2.local:8008/3",
+            "http://mock2.local:8008/4",
+            "http://mock2.local:8008/5",
+            "http://mock3.local:4004/6",
+            "http://mock3.local:4004/7",
+            "http://mock3.local:4004/8",
+            "http://mock4.local:4004/9",
+            "http://mock4.local:4004/a"
     };
 
     private static final String[] userAgents = {
@@ -53,11 +53,24 @@ public class ApacheHttpExecute {
 
     private static final Random random = new Random();
 
+    // 定义域名和推荐方法的映射关系
+    private static final Map<String, List<String>> domainMethodMap = new HashMap<>();
+
+    static {
+        // mock1.local 倾向于 GET 和 POST
+        domainMethodMap.put("mock1.local", Arrays.asList("GET", "POST"));
+        // mock2.local 倾向于 PUT 和 DELETE
+        domainMethodMap.put("mock2.local", Arrays.asList("PUT", "DELETE"));
+        // mock3.local 和 mock4.local 倾向于 PATCH
+        domainMethodMap.put("mock3.local", Collections.singletonList("PATCH"));
+        domainMethodMap.put("mock4.local", Collections.singletonList("PATCH"));
+    }
+
     public static void main(String[] args) throws Exception {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             for (int i = 0; i < 10000000; i++) {
                 String url = urls[random.nextInt(urls.length)];
-                String method = methods[random.nextInt(methods.length)];
+                String method = getRecommendedMethod(url); // 根据 URL 选择推荐的方法
 
                 switch (method) {
                     case "GET":
@@ -76,10 +89,25 @@ public class ApacheHttpExecute {
                         executePatch(client, url);
                         break;
                 }
+
+                Thread.sleep(10);
             }
         }
     }
 
+    /**
+     * 根据 URL 的域名选择推荐的方法
+     */
+    private static String getRecommendedMethod(String url) {
+        // 提取域名
+        String domain = url.split("/")[2].split(":")[0];
+
+        // 获取推荐的方法列表
+        List<String> recommendedMethods = domainMethodMap.getOrDefault(domain, Arrays.asList(methods));
+
+        // 从推荐方法中随机选择一个
+        return recommendedMethods.get(random.nextInt(recommendedMethods.size()));
+    }
     private static void executeGet(CloseableHttpClient client, String url) throws Exception {
         HttpGet request = new HttpGet(url);
         setRandomHeaders(request);

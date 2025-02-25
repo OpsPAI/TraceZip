@@ -485,7 +485,7 @@ func (m *AnyValue) Marshal() (dAtA []byte, err error) {
 	    return d, nil
 	  } else if m_, ok := m.Value.(*AnyValue_ArrayValue); ok {
 	    ret_ := make(map[string][]interface{})
-	    ret_["array_value"] = make([]interface{}, 0)
+	    ret_["values"] = make([]interface{}, 0)
 	    for _, item := range m_.ArrayValue.Values {
 	      d_, err :=json.Marshal(item.Value)
 	      if err != nil {
@@ -496,9 +496,9 @@ func (m *AnyValue) Marshal() (dAtA []byte, err error) {
 	      if err != nil {
 	        return nil, err
 	      }
-	      ret_["array_value"] = append(ret_["array_value"], d__)
+	      ret_["values"] = append(ret_["values"], d__)
 	    }
-	    d, _ := json.Marshal(ret_)
+	    d, _ := json.Marshal(map[string]interface{}{"array_value": ret_})
 	    return d, nil
 	  } else {
 	    data, _ := json.Marshal(m.Value)

@@ -17,52 +17,37 @@ import java.io.IOException;
 import static java.lang.Thread.sleep;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        ApacheHttpExecute.main(null);
+     public static void main(String[] args) throws Exception {
+         final String EXECUTION = "grpc";
 
-//        var l = new Thread(() -> KafkaConsumerExecute.main(null));
-//        KafkaConsumerExecute.main(null);
-//        KafkaConsumerExecute.main(null);
-//        KafkaProducerExecute.main(null);
-//        for(int i = 0; i < 100; i ++) {
-//            KafkaProducerExecute.main(null);
-//        }
-//        l.interrupt();
+         switch (EXECUTION) {
+             case "grpc" -> {
+                 new Thread(() -> {
+                     try {
+                         TestServer.main(null);
+                     } catch (Exception e) {
+                         throw new RuntimeException(e);
+                     }
+                 });
+                 TestClient.main(null);
+             }
 
-//        JedisExecute.main(null);
-//
-//        DubboServerApplication.main(null);
-//        for(int i = 0; i < 1000; i++) {
-//            DubboClientApplication.main(null);
-//        }
-//        JettyServer.main(null);
-//        var l =new Thread(() -> {
-//            try {
-//                TestServer.main(null);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//
-//        var r = new Thread(() -> {
-//            try {
-//                TestClient.main(null);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
+             case "kafka" -> {
+                new Thread(() -> KafkaConsumerExecute.main(null));
+                for(int i = 0; i < 100; i ++) {
+                    KafkaProducerExecute.main(null);
+                }
+             }
 
-//        TestClient.main(null);
-//        TestServer.main(null);
-//
-//        l.interrupt();
+             case "redis" -> JedisExecute.main(null);
 
-//        TestClient.main(null);
+             case "servlet" -> JettyServer.main(null);
 
-//        GreeterClient.main(null);
-//        GrpcServer.main(null);
-//        MongoDB.main(null);
-//        MySQLJDBCExample.main(null);
+             case "mongodb" -> MongoDB.main(null);
+
+             case "mysql" -> MySQLJDBCExample.main(null);
+         }
+
     }
 
 }
