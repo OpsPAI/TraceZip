@@ -64,7 +64,7 @@ The receiver only needs to configure the listening host:port.
 
 ### How to use
 
-You can simply send formatted [span data](https://zenodo.org/records/14302089) to compressor endpoint. (You may need write a scripts to send it), using scripts in directory `./wrk`.
+You can simply send formatted [span data](https://zenodo.org/records/14921120) to compressor endpoint. (You may need write a scripts to send it), using scripts in directory `./wrk`.
 
 If you want to send the dataset provided by us to verify the experiment, please remember to select the span data with the same service instance name (infered by a attribute in `resource_spans.resource.attributes[]` called `host.name`) from the dataset for sending. We distinguished it in new version datasets.
 

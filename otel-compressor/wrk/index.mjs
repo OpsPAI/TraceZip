@@ -10,7 +10,7 @@ const endpointURL = args[2] || "http://127.0.0.1:4318/v1/traces"; // Third argum
 const sendInterval = parseInt(args[3] || "1000", 10); // Fourth argument: send interval, default is 1000 ms
 
 // Get all .txt files in the folder
-const files = fs.readdirSync(folderPath).filter(file => file.endsWith('.txt'));
+const files = fs.readdirSync(folderPath).filter(file => file.endsWith('.txt') || file.endsWith('.json'));
 
 // Delay function
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
