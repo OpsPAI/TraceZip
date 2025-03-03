@@ -39,8 +39,11 @@ async function sendFiles() {
         if (count++ === 0 && mergeFileSize !== 1) {
           toSend = jsonData;
           continue;
+        } else if(mergeFileSize === 1) {
+          toSend = jsonData;
+        } else {
+          toSend.resource_spans.push(...(jsonData.resource_spans));
         }
-        toSend.resource_spans.push(...(jsonData.resource_spans));
 
         if (count !== mergeFileSize) {
           continue;
