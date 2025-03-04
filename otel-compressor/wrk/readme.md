@@ -16,11 +16,11 @@ npm install node-fetch
 
 Run the script with:
 ```bash
-node script.js <folderPath> <mergeFileSize> <endpointURL> <sendInterval>
+node index.mjs <folderPath> <mergeFileSize> <endpointURL> <sendInterval>
 ```
 
-- `<folderPath>`: Path to the folder containing `.txt` files (default: `spans`).
-- `<mergeFileSize>`: Number of files to merge in each batch (default: `20`).
+- `<folderPath>`: Path to the folder containing `.txt` files or `.json` files (default: `spans`).
+- `<mergeFileSize>`: Number of files to merge in each batch (default: `1`).
 - `<endpointURL>`: The OpenTelemetry endpoint to send data to (default: `http://127.0.0.1:4318/v1/traces`).
 - `<sendInterval>`: The time interval between each request is in milliseconds (default value: 1000).
 
@@ -28,9 +28,8 @@ Specifically, if you want to send the dataset we provided, you need to categoriz
 
 ## Notes
 
-1. The script assumes that `.txt` files contain valid JSON.
-2. A delay of 1 second is added between each request.
-3. The OpenTelemetry endpoint URL can be specified as a parameter.
+1. The script assumes that `.txt` or `.json` files contain valid JSON.
+2. The OpenTelemetry endpoint URL can be specified as a parameter.
 
 ## Example Output
 
