@@ -14,14 +14,14 @@ To Decompress spans, running it by `go run . -dirname <input_dir_name> -decompre
 
 This program supports several command-line flags to configure its behavior. Below is a detailed explanation of each flag:
 
-| **Flag**   | **Type** | **Default Value** | **Description**                                                                                 |
-| ---------------- | -------------- | ----------------------- | ----------------------------------------------------------------------------------------------------- |
-| `-path`        | `string`     | `""`                  | Specifies the path of the file to be compressed. This is a required parameter for compression.        |
-| `-chunk`       | `int`        | `0`                   | Sets the chunk size for processing the data. If set to `0`, the entire file is processed in one go. |
-| `-j`           | `int`        | `1`                   | Sets the maximum number of CPU cores to be used during execution                                      |
-| `-merging`     | `bool`       | `false`               | Enables Merging Tree compression. If set to `true`, the program will use Merging Tree compression.  |
-| `-decompress`  | `bool`       | `false`               | Specifies whether the program should decompress files instead of compressing them. Configure it with `-dirname` simultaneously.                  |
-| `-dirname`     | `string`     | `"output"`            | Specifies the name of the output directory where compressed files will be stored.                     |
-| `-not_alibaba` | `bool`       | `false`               | Determines the sorting order of attributes:                                                           |
-|                |            |                         | - If `true`, attributes are sorted by their optional value counts in ascending order.               |
-|                |            |                         | - If `false`, attributes are sorted based on a predefined order.                                    |
+| **Flag**        | **Type**   | **Default**  | **Description**                                                                 |
+|----------------|-----------|-------------|-----------------------------------------------------------------------------|
+| `-path`       | `string`  | `""`        | Path of the file to be compressed (**Required for compression**).          |
+| `-chunk`      | `int`     | `0`         | Chunk size for processing data (`0` means processing the entire file at once). |
+| `-j`          | `int`     | `1`         | Number of CPU cores to use.                                                 |
+| `-merging`    | `bool`    | `false`     | Enables Merging Tree compression (`true` enables it).                       |
+| `-decompress` | `bool`    | `false`     | Enables decompression mode (**Used with `-dirname`**).                      |
+| `-dirname`    | `string`  | `"output"`  | Directory name for storing compressed files (used for both compression and decompression). |
+| `-not_alibaba`| `bool`    | `false`     | Attribute sorting mode:                                                      |
+|               |           |             | - `true`: Sorts attributes by optional value counts (ascending order).      |
+|               |           |             | - `false`: Uses a predefined attribute order.                               |

@@ -1,4 +1,4 @@
-VM Options: 
+To run it, add `VM Options`: 
 ```
 --add-opens
 java.base/java.lang=ALL-UNNAMED

@@ -9,8 +9,6 @@ It is a collection of works which is made to build a prototype system of `TraceZ
 
 For more information, please enter in the corresponding directory and read its README.
 
-Here’s a suggested annotation for your README:
-
 ---
 
 ## Note on Data Usage: **Cluster-Trace-Microservices-v2022**
@@ -19,7 +17,7 @@ Our research utilizes the **Cluster-Trace-Microservices-v2022** dataset from the
 
 For further details on this dataset, refer to the official repository: [Alibaba Cluster Data](https://github.com/alibaba/clusterdata). The `static-compressor` compress the CallGraph. 
 
-We express our gratitude to Alibaba Group for making this invaluable dataset available for the research community. If you have any questions about the trace data, consider filing an issue on their GitHub repository for community-wide discussions.
+We express our gratitude to Alibaba Group for making this invaluable dataset available for the research community.
 
 ---
 
